@@ -12,7 +12,7 @@ Beschreibung:		Klasse zur Bildverarbeitung - Template für Studierende
 #include "ImageProcessing.h"
 #include "ImagePreProcessing.h"
 #include <stack>
-//#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -87,7 +87,7 @@ void ImageProcessing::RegionGrowing(int th, Point seed) {
 	procImage = mask;
 }
 
-/*
+
 void ImageProcessing::RegionFractal(int th, Point seed) {
 
 	stack<Point>stack;
@@ -120,7 +120,7 @@ void ImageProcessing::RegionFractal(int th, Point seed) {
 		next[3].Y(currentSeed.Y());
 
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) { // fractal interpreter
 
 //			int test1 = rawAt; int test2 = rawImage.At(next[i].X(), next[i].Y());
 			check[i] = abs(rawAt - rawImage.At(next[i].X(), next[i].Y()));
@@ -131,19 +131,18 @@ void ImageProcessing::RegionFractal(int th, Point seed) {
 		for (int i = 0; i < 4; i++) {
 
 			if (check[0] <= th && check[1] <= th && check[2] <= th && check[3] <= th) {
-				// all homogenous
+				
 				mask.Set(currentSeed.X(), currentSeed.Y(), 255);
 			}
 			if (next[i].X() != 1 && next[i].X() < lastCol && next[i].Y() != 1 && next[i].Y() < lastRow) {
-				// inbounds				
+							
 				if (mask.At(next[i].X(), next[i].Y()) == 0) {
-					// not visited
+					
 					stack.push(next[i]);
 					mask.Set(next[i].X(), next[i].Y(), 1);
 				}
-			}// set visited
+			}
 		}
 	}
 	procImage = mask;
 }
-*/

@@ -39,7 +39,13 @@ public:
 
 	int filter;
 	int intensity;
+	int mode;
+	int threshold;
+	bool again = true;
+	void ImageWindow::intro();
 	void ImageWindow::chooseFilters();
+	void ImageWindow::getThreshold();
+	void ImageWindow::doItAgain();
 
 	// Anzeigen des Fensters mit Bild vom Typ Image
 	// Parameter "name": Beschriftung des Fensters

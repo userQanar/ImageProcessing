@@ -58,6 +58,18 @@ bool ImageWindow::ImreadDialog(string directory)
 	return true;
 }
 
+void ImageWindow::intro() 
+{
+	cout << endl << "Geben Sie die Nummer des Wunschprogramms ein: ";
+	cout << "0.Filtermaske  1.RegionGrowing  2.Fraktalbilder" << endl;
+	cin >> mode;
+	if (mode < 0 || mode > 2)
+	{
+		cout << "Ungueltige Eingabe!" << endl;
+		exit(0);
+	}
+} 
+
 void ImageWindow::chooseFilters()
 {
 	cout << endl << "Geben Sie die Nummer des Filters ein: ";
@@ -72,12 +84,31 @@ void ImageWindow::chooseFilters()
 	cout << endl << "Geben Sie die Filterintensitaet  ein: 1, 2, 3, 4, 5 " << endl;
 	cin >> intensity;
 
-	if (intensity <1)
+	if (intensity < 1)
 	{
 		cout << "Ungueltige Eingabe!" << endl;
 		exit(0);
 	}
 }
+
+void ImageWindow::getThreshold()
+{
+	cout << endl << "Geben Sie den Threshold ein: " << endl;;
+	cin >> threshold;
+	if (threshold < 0 || threshold > 255)
+	{
+		cout << "Ungueltige Eingabe!" << endl;
+		exit(0);
+	}
+}
+
+void ImageWindow::doItAgain() 
+{
+	cout << endl << "Noch einmal ? 1 Ja  0 Nein " << endl;;
+	cin >> again;
+	if (again != 1) exit(0);
+}
+
 
 void ImageWindow::Imshow(string name)
 {

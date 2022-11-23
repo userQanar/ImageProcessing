@@ -26,6 +26,7 @@ public:
 	Image &GetResult();
 
 	void RegionGrowing(int threshold, Point seed);
+	void ImageProcessing::RegionFractal(int th, Point seed);
 
 private:
 	Image rawImage;
