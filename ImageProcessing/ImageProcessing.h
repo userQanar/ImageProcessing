@@ -25,7 +25,10 @@ public:
 	// Rückgabe des bearbeiteten Bildes
 	Image &GetResult();
 
-	void RegionGrowing(int threshold, Point seed);
+	bool local;
+	void ImageProcessing::setLocal();
+
+	void RegionGrowing(int threshold, Point seed, bool local);
 	void ImageProcessing::RegionFractal(int th, Point seed);
 
 private:

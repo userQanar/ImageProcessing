@@ -35,14 +35,19 @@ int main()
 	grayImage = gray.Convert2Gray();
 	//grayImageWindow.Imshow("Gray Image");
 
-	//0.Filtermaske  1.RegionGrowing  2.Fraktalbilder
 
+	//0.Filtermaske  1.RegionGrowing  2.Fraktalbilder
 	grayImageWindow.intro();
-	int mode = grayImageWindow.mode;
 
 
 while (grayImageWindow.again) {
-	//*************************Filtermaske********************************/  
+
+//*************************Filtermaske********************************/  
+	if(grayImageWindow.restartMenu){
+		grayImageWindow.intro();
+	}
+
+	int mode = grayImageWindow.mode;
 
 	if (mode == 0) {
 
@@ -80,33 +85,38 @@ while (grayImageWindow.again) {
 			medianImageWindow.Imshow("Medanfilter Image");
 		}
 	}
-	//*************************RegionGrowing********************************/  
+//*************************RegionGrowing********************************/  
 
 	else if (mode == 1) {
 
-		grayImageWindow.getThreshold();
+		ImageProcessing processing(grayImage);
+
+		processing.setLocal();
+		grayImageWindow.setThreshold();
+		bool local = processing.local;
 		int threshold = grayImageWindow.threshold;
 
 		Point seed = grayImageWindow.GetSeed();
-		ImageProcessing proeccesing(grayImage);
 
-		proeccesing.RegionGrowing(threshold, seed);
+		processing.RegionGrowing(threshold, seed, local);
 		Image segImage;
 		ImageWindow segImageWindow(segImage);
 
-		segImage = proeccesing.GetResult();
+		segImage = processing.GetResult();
 		segImage = segImage.Imfusion(grayImage, 0.5);
 		segImageWindow.Imshow("Segmented Image");
 
 	}
-	//*************************Fraktalbilder********************************/  
+//*************************Fraktalbilder********************************/  
 
 	else if (mode == 2) {
 
-		grayImageWindow.getThreshold();
+		grayImageWindow.setThreshold();
 		int threshold = grayImageWindow.threshold;
 
-		Point seed = grayImageWindow.GetSeed();
+		Point seed;
+		seed.X(5); seed.Y(5);//Doesnt matter same result
+
 		ImageProcessing proeccesing(grayImage);
 
 		proeccesing.RegionFractal(threshold, seed);
@@ -119,8 +129,5 @@ while (grayImageWindow.again) {
 	ImageWindow::WaitKey();
 	grayImageWindow.doItAgain();
 }
-	// Auf Tastendruck warten, bevor alle geöffneten Grafikfenster wieder geschlossen werden
-
-
 	return 0;
 }

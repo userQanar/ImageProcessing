@@ -91,7 +91,7 @@ void ImageWindow::chooseFilters()
 	}
 }
 
-void ImageWindow::getThreshold()
+void ImageWindow::setThreshold()
 {
 	cout << endl << "Geben Sie den Threshold ein: " << endl;;
 	cin >> threshold;
@@ -102,11 +102,20 @@ void ImageWindow::getThreshold()
 	}
 }
 
-void ImageWindow::doItAgain() 
+void ImageWindow::doItAgain()
 {
 	cout << endl << "Noch einmal ? 1 Ja  0 Nein " << endl;;
 	cin >> again;
-	if (again != 1) exit(0);
+	if (again)return;
+
+	if (again != 1) {
+
+		cout << endl << "Menu neustarten oder Exit ? 1 Menu  0 Exit " << endl;;
+		cin >> restartMenu;
+
+		if (!restartMenu) exit(0);
+		else again = true;
+	}
 }
 
 

@@ -42,9 +42,10 @@ public:
 	int mode;
 	int threshold;
 	bool again = true;
+	bool restartMenu = false;
 	void ImageWindow::intro();
 	void ImageWindow::chooseFilters();
-	void ImageWindow::getThreshold();
+	void ImageWindow::setThreshold();
 	void ImageWindow::doItAgain();
 
 	// Anzeigen des Fensters mit Bild vom Typ Image

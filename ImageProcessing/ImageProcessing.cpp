@@ -33,7 +33,13 @@ Image &ImageProcessing::GetResult()
 	return procImage;
 }
 
-void ImageProcessing::RegionGrowing(int th, Point seed) {
+void ImageProcessing::setLocal() {
+
+	cout << endl << "Lokal oder Global ? 1. Lokal 0. Global : " << endl;;
+	cin >> local;
+}
+
+void ImageProcessing::RegionGrowing(int th, Point seed, bool local) {
 
 	stack<Point>stack;
 	Point currentSeed;
@@ -71,10 +77,27 @@ void ImageProcessing::RegionGrowing(int th, Point seed) {
 			if (next[i].X() != 1 && next[i].X() < (mask.Rows() - 1) && next[i].Y() != 1 && next[i].Y() < (mask.Cols() - 1)) {
 		  //inbounds
 
-				if ((check[0] <= th && check[1] <= th) && (check[2] <= th && check[3] <= th)) {
-			  //all homogenous
-					mask.Set(currentSeed.X(), currentSeed.Y(), 255);
-					
+
+				if(local){ 
+					if ((check[0] <= th && check[1] <= th) && (check[2] <= th && check[3] <= th)) {
+				  //all homogenous
+						mask.Set(currentSeed.X(), currentSeed.Y(), 255);
+						
+						if (mask.At(next[i].X(), next[i].Y()) == 0) {
+					  //not visited
+							stack.push(next[i]);
+							mask.Set(next[i].X(), next[i].Y(), 1);
+						}
+					}
+				}
+				else{//global
+
+					if ((check[0] <= th && check[1] <= th) && (check[2] <= th && check[3] <= th)) {
+				  //all homogenous
+						mask.Set(currentSeed.X(), currentSeed.Y(), 255);
+
+
+					}
 					if (mask.At(next[i].X(), next[i].Y()) == 0) {
 				  //not visited
 						stack.push(next[i]);
