@@ -12,7 +12,7 @@ Beschreibung:		Klasse zur Bildverarbeitung - Template für Studierende
 #pragma once
 
 #include "Image.h"
-
+#include "Point.h"
 
 class ImageProcessing
 {
@@ -24,6 +24,8 @@ public:
 
 	// Rückgabe des bearbeiteten Bildes
 	Image &GetResult();
+
+	void RegionGrowing(int threshold, Point seed);
 
 private:
 	Image rawImage;

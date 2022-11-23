@@ -11,13 +11,15 @@ Beschreibung:		Hauptprogramm zu Versuch 2 - Template für Studierende
 
 #include <string>
 #include <iostream>
+#include <stack>
 
 #include "Image.h"
+#include "ImageProcessing.h"
 #include "ImagePreProcessing.h"
 #include "ImageWindow.h"
 
 
-#define VORBEREITUNG
+//#define VORBEREITUNG
 
 int main()
 {
@@ -26,7 +28,6 @@ int main()
 	ImageWindow testImageWindow(rawImage);
 	std::string directory = "./Images/";
 	testImageWindow.ImreadDialog(directory);
-	testImageWindow.chooseFilters();
 	//testImageWindow.Imshow("Raw Image");
 		
 	// Konvertierung in Grauwertbild
@@ -40,7 +41,7 @@ int main()
 	
 #ifdef VORBEREITUNG
 	// Vorbereitungsaufgaben
-
+	testImageWindow.chooseFilters();
 	//0 naked, 1 Box, 2 Gauss, 3 Median
 	int chooseFilter = testImageWindow.filter;
 
@@ -75,6 +76,17 @@ int main()
 #else
 	// Laboraufgaben
 	
+	Point seed = grayImageWindow.GetSeed();
+	ImageProcessing proeccesing(grayImage);
+	int threshold = 30;//
+
+	proeccesing.RegionGrowing(threshold, seed);
+	Image segImage;
+	ImageWindow segImageWindow(segImage);
+	segImage = proeccesing.GetResult();
+
+	segImage = segImage.Imfusion(grayImage, 0.5);
+	segImageWindow.Imshow("Segmented Image");
 
 #endif // VORBEREITUNG (zu #define VORBEREITUNG zugehöriges #endif)
 
