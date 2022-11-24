@@ -26,10 +26,12 @@ public:
 	Image &GetResult();
 
 	bool local;
-	void ImageProcessing::setLocal();
+	bool quartet;
+	void setLocal();
+	void setQuartet();
 
-	void RegionGrowing(int threshold, Point seed, bool local);
-	void ImageProcessing::RegionFractal(int th, Point seed);
+	void RegionGrowing(int threshold, Point seed, bool local, bool change);
+	void RegionFractal(int th, Point seed);
 
 private:
 	Image rawImage;

@@ -27,7 +27,7 @@ int main()
 	std::string directory = "./Images/";
 	testImageWindow.ImreadDialog(directory);
 	//testImageWindow.Imshow("Raw Image");
-		
+
 	// Konvertierung in Grauwertbild
 	Image grayImage;
 	ImageWindow grayImageWindow(grayImage);
@@ -40,94 +40,96 @@ int main()
 	grayImageWindow.intro();
 
 
-while (grayImageWindow.again) {
+	while (grayImageWindow.again) {
 
 //*************************Filtermaske********************************/  
-	if(grayImageWindow.restartMenu){
-		grayImageWindow.intro();
-	}
-
-	int mode = grayImageWindow.mode;
-
-	if (mode == 0) {
-
-		grayImageWindow.chooseFilters();
-
-		//0 naked, 1 Box, 2 Gauss, 3 Median
-		int chooseFilter = grayImageWindow.filter;
-
-		// filterIntensity (2n)-1 
-		int magnitude = grayImageWindow.intensity;
-
-		ImagePreProcessing  sobel(grayImage);
-		Image sobelImage = sobel.SobelFilter(chooseFilter, magnitude);
-		ImageWindow sobelImageWindow(sobelImage);
-		sobelImageWindow.Imshow("Sobelfilter Image");
-
-		ImagePreProcessing filter(grayImage);
-		grayImageWindow.Imshow("Gray Image");
-
-		if (chooseFilter == 1) {
-			Image boxImage = filter.BoxFilter(magnitude);
-			ImageWindow boxImageWindow(boxImage);
-			boxImageWindow.Imshow("Boxfilter Image");
+		if (grayImageWindow.restartMenu) {
+			grayImageWindow.intro();
 		}
 
-		if (chooseFilter == 2) {
-			Image gaussImage = filter.GaussFilter(magnitude);
-			ImageWindow gaussImageWindow(gaussImage);
-			gaussImageWindow.Imshow("Gauﬂfilter Image");
-		}
+		int mode = grayImageWindow.mode;
 
-		if (chooseFilter == 3) {
-			Image medianImage = filter.MedianFilter(magnitude);
-			ImageWindow medianImageWindow(medianImage);
-			medianImageWindow.Imshow("Medanfilter Image");
+		if (mode == 0) {
+
+			grayImageWindow.chooseFilters();
+
+			//0 naked, 1 Box, 2 Gauss, 3 Median
+			int chooseFilter = grayImageWindow.filter;
+
+			// filterIntensity (2n)-1 
+			int magnitude = grayImageWindow.intensity;
+
+			ImagePreProcessing sobel(grayImage);
+			Image sobelImage = sobel.SobelFilter(chooseFilter, magnitude);
+			ImageWindow sobelImageWindow(sobelImage);
+			sobelImageWindow.Imshow("Sobelfilter Image");
+
+			ImagePreProcessing filter(grayImage);
+			grayImageWindow.Imshow("Gray Image");
+
+			if (chooseFilter == 1) {
+				Image boxImage = filter.BoxFilter(magnitude);
+				ImageWindow boxImageWindow(boxImage);
+				boxImageWindow.Imshow("Boxfilter Image");
+			}
+
+			else if (chooseFilter == 2) {
+				Image gaussImage = filter.GaussFilter(magnitude);
+				ImageWindow gaussImageWindow(gaussImage);
+				gaussImageWindow.Imshow("Gauﬂfilter Image");
+			}
+
+			else if (chooseFilter == 3) {
+				Image medianImage = filter.MedianFilter(magnitude);
+				ImageWindow medianImageWindow(medianImage);
+				medianImageWindow.Imshow("Medanfilter Image");
+			}
 		}
-	}
 //*************************RegionGrowing********************************/  
 
-	else if (mode == 1) {
+		else if (mode == 1) {
 
-		ImageProcessing processing(grayImage);
+			ImageProcessing processing(grayImage);
 
-		processing.setLocal();
-		grayImageWindow.setThreshold();
-		bool local = processing.local;
-		int threshold = grayImageWindow.threshold;
+			processing.setLocal();
+			processing.setQuartet();
+			grayImageWindow.setThreshold();
+			bool local = processing.local;
+			bool quartet = processing.quartet;
+			int threshold = grayImageWindow.threshold;
 
-		Point seed = grayImageWindow.GetSeed();
+			Point seed = grayImageWindow.GetSeed();
 
-		processing.RegionGrowing(threshold, seed, local);
-		Image segImage;
-		ImageWindow segImageWindow(segImage);
+			processing.RegionGrowing(threshold, seed, local, quartet);
+			Image segImage;
+			ImageWindow segImageWindow(segImage);
 
-		segImage = processing.GetResult();
-		segImage = segImage.Imfusion(grayImage, 0.5);
-		segImageWindow.Imshow("Segmented Image");
+			segImage = processing.GetResult();
+			segImage = segImage.Imfusion(grayImage, 0.5);
+			segImageWindow.Imshow("Segmented Image");
 
-	}
+		}
 //*************************Fraktalbilder********************************/  
 
-	else if (mode == 2) {
+		else if (mode == 2) {
 
-		grayImageWindow.setThreshold();
-		int threshold = grayImageWindow.threshold;
+			grayImageWindow.setThreshold();
+			int threshold = grayImageWindow.threshold;
 
-		Point seed;
-		seed.X(5); seed.Y(5);//Doesnt matter same result
+			Point seed;
+			seed.X(5); seed.Y(5);//can be changet to test number outputs
 
-		ImageProcessing proeccesing(grayImage);
+			ImageProcessing proeccesing(grayImage);
 
-		proeccesing.RegionFractal(threshold, seed);
-		Image segImage;
-		ImageWindow segImageWindow(segImage);
-		segImage = proeccesing.GetResult();
-		segImageWindow.Imshow("Segmented Image");
+			proeccesing.RegionFractal(threshold, seed);
+			Image segImage;
+			ImageWindow segImageWindow(segImage);
+			segImage = proeccesing.GetResult();
+			segImageWindow.Imshow("Segmented Image");
 
+		}
+		ImageWindow::WaitKey();
+		grayImageWindow.doItAgain();
 	}
-	ImageWindow::WaitKey();
-	grayImageWindow.doItAgain();
-}
 	return 0;
 }

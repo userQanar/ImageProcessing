@@ -43,10 +43,12 @@ public:
 	int threshold;
 	bool again = true;
 	bool restartMenu = false;
-	void ImageWindow::intro();
-	void ImageWindow::chooseFilters();
-	void ImageWindow::setThreshold();
-	void ImageWindow::doItAgain();
+
+	void intro();
+	void chooseFilters();
+	void setThreshold();
+	void doItAgain();
+	
 
 	// Anzeigen des Fensters mit Bild vom Typ Image
 	// Parameter "name": Beschriftung des Fensters
