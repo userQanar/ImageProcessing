@@ -25,10 +25,14 @@ public:
 	// Rückgabe des bearbeiteten Bildes
 	Image &GetResult();
 
+	int n;
 	bool local;
 	bool quartet;
 	void setLocal();
 	void setQuartet();
+	bool inbounds(Point p, Image im);
+	bool homogenous(int[], int th, int n);
+	bool notVisited(Image im, Point next[], int i);
 
 	void RegionGrowing(int threshold, Point seed, bool local, bool change);
 	void RegionFractal(int th, Point seed);

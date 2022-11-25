@@ -39,15 +39,16 @@ int main()
 	//0.Filtermaske  1.RegionGrowing  2.Fraktalbilder
 	grayImageWindow.intro();
 
-
 	while (grayImageWindow.again) {
 
-//*************************Filtermaske********************************/  
-		if (grayImageWindow.restartMenu) {
+		if (grayImageWindow.restartMenu)
+		{
 			grayImageWindow.intro();
 		}
 
 		int mode = grayImageWindow.mode;
+
+//*************************Filtermaske********************************/  
 
 		if (mode == 0) {
 
@@ -116,8 +117,8 @@ int main()
 			grayImageWindow.setThreshold();
 			int threshold = grayImageWindow.threshold;
 
-			Point seed;
-			seed.X(5); seed.Y(5);//can be changet to test number outputs
+			Point seed; seed.X(5); seed.Y(5);
+			//can be changet to test number outputs
 
 			ImageProcessing proeccesing(grayImage);
 
