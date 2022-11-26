@@ -26,15 +26,20 @@ public:
 	Image &GetResult();
 
 	int n;
+	int outliner = 0;
 	bool local;
 	bool quartet;
-	void setLocal();
-	void setQuartet();
-	bool inbounds(Point p, Image im);
-	bool homogenous(int[], int th, int n);
-	bool notVisited(Image im, Point next[], int i);
+	int threshold;
+	bool setLocal();
+	bool setQuartet();
+	int setOutliner();
+	int setThreshold();
 
-	void RegionGrowing(int threshold, Point seed, bool local, bool change);
+	bool inbounds(Point p, Image im);
+	bool homogenous(int[], int th, int n, int outliner);
+	bool notVisited(Point p, Image im);
+
+	void RegionGrowing(int threshold, Point seed, bool local, bool quartet, int outliner);
 	void RegionFractal(int th, Point seed);
 
 private:

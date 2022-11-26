@@ -91,17 +91,6 @@ void ImageWindow::chooseFilters()
 	}
 }
 
-void ImageWindow::setThreshold()
-{
-	cout << endl << "Geben Sie den Threshold ein: " << endl;;
-	cin >> threshold;
-	if (threshold < 0 || threshold > 255)
-	{
-		cout << "Ungueltige Eingabe!" << endl;
-		exit(0);
-	}
-}
-
 void ImageWindow::doItAgain()
 {
 	cout << endl << "Noch einmal ? 1 Ja  0 Nein " << endl;;
@@ -117,7 +106,6 @@ void ImageWindow::doItAgain()
 		else again = true;
 	}
 }
-
 
 void ImageWindow::Imshow(string name)
 {

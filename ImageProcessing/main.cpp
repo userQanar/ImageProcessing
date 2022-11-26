@@ -91,20 +91,17 @@ int main()
 		else if (mode == 1) {
 
 			ImageProcessing processing(grayImage);
-
-			processing.setLocal();
-			processing.setQuartet();
-			grayImageWindow.setThreshold();
-			bool local = processing.local;
-			bool quartet = processing.quartet;
-			int threshold = grayImageWindow.threshold;
+			bool local    = processing.setLocal();
+			bool quartet  = processing.setQuartet();
+			int outliner  = processing.setOutliner();
+			int threshold = processing.setThreshold();
 
 			Point seed = grayImageWindow.GetSeed();
 
-			processing.RegionGrowing(threshold, seed, local, quartet);
+			processing.RegionGrowing(threshold, seed, local, quartet, outliner);
+			
 			Image segImage;
 			ImageWindow segImageWindow(segImage);
-
 			segImage = processing.GetResult();
 			segImage = segImage.Imfusion(grayImage, 0.5);
 			segImageWindow.Imshow("Segmented Image");
@@ -114,18 +111,17 @@ int main()
 
 		else if (mode == 2) {
 
-			grayImageWindow.setThreshold();
-			int threshold = grayImageWindow.threshold;
+			ImageProcessing processing(grayImage);
+			int threshold = processing.setThreshold();
 
 			Point seed; seed.X(5); seed.Y(5);
 			//can be changet to test number outputs
 
-			ImageProcessing proeccesing(grayImage);
+			processing.RegionFractal(threshold, seed);
 
-			proeccesing.RegionFractal(threshold, seed);
 			Image segImage;
 			ImageWindow segImageWindow(segImage);
-			segImage = proeccesing.GetResult();
+			segImage = processing.GetResult();
 			segImageWindow.Imshow("Segmented Image");
 
 		}
