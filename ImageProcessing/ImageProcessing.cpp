@@ -144,6 +144,8 @@ void ImageProcessing::RegionGrowing(int threshold, Point seed, bool local, bool 
 	procImage = mask;
 }
 
+
+
 void ImageProcessing::RegionFractal(int threshold, Point seed) 
 {
 	stack<Point>stack;
@@ -170,13 +172,12 @@ void ImageProcessing::RegionFractal(int threshold, Point seed)
 
 		for (int i = 0; i < 4; i++) { 
 			offset[i] = abs(rawAt - rawImage.At(next[i].X(), next[i].Y()));
-			//if (offset[i] < 40 && offset[i] > 10) check[i] - 10;
 		}
 
 		for (int i = 0; i < 4; i++) {
 			
 			if (homogenous(offset, threshold, 4, outliner)) 
-				mask.Set(currentSeed.X(), currentSeed.Y(), 255 - (3 * offset[i]));	
+				mask.Set(currentSeed.X(), currentSeed.Y(), 255 - (2 * offset[i]));	
 
 			if (!inbounds(next[i], mask)) 
 				continue;
