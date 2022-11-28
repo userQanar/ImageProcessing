@@ -76,6 +76,8 @@ void ImageWindow::chooseFilters()
 	cout << "0.naked  1.box  2.gauss  3.median " << endl;
 	cin >> filter;
 
+	if (filter == 0) return;
+
 	if (filter < 0 || filter > 3)
 	{
 		cout << "Ungueltige Eingabe!" << endl;
@@ -97,7 +99,7 @@ void ImageWindow::doItAgain()
 	cin >> again;
 	if (again)return;
 
-	if (again != 1) {
+	if (!again) {
 
 		cout << endl << "Menu neustarten oder Exit ? 1 Menu  0 Exit " << endl;;
 		cin >> restartMenu;
