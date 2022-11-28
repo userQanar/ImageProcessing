@@ -6,7 +6,7 @@ Hochschule Pforzheim
 Datei:				main.cpp
 Autoren:			Sascha Seifert, Max Barchet, Joachim Storz
 Student:			Robin Hill
-Letzte Änderung:	23.11.2022
+Letzte Änderung:	28.11.2022
 Beschreibung:		Hauptprogramm zu Versuch 2 - Template für Studierende
 ******************************************************************************/
 
@@ -39,11 +39,12 @@ int main()
 	//0.Filtermaske  1.RegionGrowing  2.Fraktalbilder
 	grayImageWindow.intro();
 
-	while (grayImageWindow.again) {
+	while  (grayImageWindow.again) {
 
 		if (grayImageWindow.restartMenu)
 		{
 			grayImageWindow.intro();
+			grayImageWindow.restartMenu == false;
 		}
 
 		int mode = grayImageWindow.mode;
@@ -55,37 +56,67 @@ int main()
 			grayImageWindow.chooseFilters();
 
 			//0 naked, 1 Box, 2 Gauss, 3 Median
-			int chooseFilter = grayImageWindow.filter;
+			int yourFilter = grayImageWindow.filter;
 
 			// filterIntensity (2n)-1 
 			int magnitude = grayImageWindow.intensity;
 
-			ImagePreProcessing sobel(grayImage);
-			Image sobelImage = sobel.SobelFilter(chooseFilter, magnitude);
-			ImageWindow sobelImageWindow(sobelImage);
-			sobelImageWindow.Imshow("Sobelfilter Image");
-
 			ImagePreProcessing filter(grayImage);
 			grayImageWindow.Imshow("Gray Image");
 
-			if (chooseFilter == 1) {
+			Image boxImage; Image gaussImage; Image medianImage;
+
+			if (yourFilter == 0) {
+
+				ImagePreProcessing sobel(grayImage);
+				Image sobelImage = sobel.SobelFilter(yourFilter, magnitude);
+				ImageWindow sobelImageWindow(sobelImage);
+				sobelImageWindow.Imshow("Sobelfilter Image");
+			}
+			else if (yourFilter == 1) {
+
 				Image boxImage = filter.BoxFilter(magnitude);
 				ImageWindow boxImageWindow(boxImage);
 				boxImageWindow.Imshow("Boxfilter Image");
-			}
 
-			else if (chooseFilter == 2) {
+				ImageWindow::WaitKey();
+				grayImage = filter.wantToSave(grayImage, boxImage);
+				if (filter.save) {
+					grayImageWindow.intro();
+					mode = grayImageWindow.mode;
+					continue;
+				}
+			}
+			else if (yourFilter == 2) {
+
 				Image gaussImage = filter.GaussFilter(magnitude);
 				ImageWindow gaussImageWindow(gaussImage);
 				gaussImageWindow.Imshow("Gaußfilter Image");
-			}
 
-			else if (chooseFilter == 3) {
+				ImageWindow::WaitKey();
+				grayImage = filter.wantToSave(grayImage, gaussImage);
+				if (filter.save) {
+					grayImageWindow.intro();
+					mode = grayImageWindow.mode;
+					continue;
+				}
+			}
+			else if (yourFilter == 3) {
+
 				Image medianImage = filter.MedianFilter(magnitude);
 				ImageWindow medianImageWindow(medianImage);
 				medianImageWindow.Imshow("Medanfilter Image");
+
+				ImageWindow::WaitKey();
+				grayImage = filter.wantToSave(grayImage, medianImage);
+				if (filter.save) {
+					grayImageWindow.intro();
+					mode = grayImageWindow.mode;
+					continue;
+				}
 			}
 		}
+
 //*************************RegionGrowing********************************/  
 
 		else if (mode == 1) {
@@ -95,7 +126,6 @@ int main()
 			bool quartet  = processing.setQuartet();
 			int outliner  = processing.setOutliner();
 			int threshold = processing.setThreshold();
-
 			Point seed = grayImageWindow.GetSeed();
 
 			processing.RegionGrowing(threshold, seed, local, quartet, outliner);
@@ -113,9 +143,7 @@ int main()
 
 			ImageProcessing processing(grayImage);
 			int threshold = processing.setThreshold();
-
-			Point seed; seed.X(5); seed.Y(5);
-			//can be changet to test number outputs
+			Point seed; seed.X(5); seed.Y(5);//global
 
 			processing.RegionFractal(threshold, seed);
 

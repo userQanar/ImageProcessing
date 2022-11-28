@@ -67,7 +67,7 @@ int ImageProcessing::setThreshold()
 
 bool ImageProcessing::inbounds(Point p, Image im) 
 {
-	if (p.X() != 1 && p.X() < (im.Rows() - 1) && p.Y() != 1 && p.Y() < (im.Cols() - 1)) return true;
+	if (p.X() != 2 && p.X() < (im.Rows() - 2) && p.Y() != 2 && p.Y() < (im.Cols() - 2)) return true;
 		return false;
 }
 
@@ -144,8 +144,6 @@ void ImageProcessing::RegionGrowing(int threshold, Point seed, bool local, bool 
 	procImage = mask;
 }
 
-
-
 void ImageProcessing::RegionFractal(int threshold, Point seed) 
 {
 	stack<Point>stack;
@@ -176,13 +174,10 @@ void ImageProcessing::RegionFractal(int threshold, Point seed)
 
 		for (int i = 0; i < 4; i++) {
 			
-			if (homogenous(offset, threshold, 4, outliner)) 
+			if (homogenous(offset, threshold, 4, 0)) 
 				mask.Set(currentSeed.X(), currentSeed.Y(), 255 - (2 * offset[i]));	
 
-			if (!inbounds(next[i], mask)) 
-				continue;
-
-			if (notVisited(next[i], mask)) {
+			if (inbounds(next[i], mask) && notVisited(next[i], mask)) {
 				stack.push(next[i]);
 				mask.Set(next[i].X(), next[i].Y(), 1);
 			}		

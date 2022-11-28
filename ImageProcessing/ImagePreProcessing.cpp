@@ -10,7 +10,7 @@ Beschreibung:		Klasse zur elementaren Bildverarbeitung und -konvertierung
 ******************************************************************************/
 
 #include "ImagePreProcessing.h"
-
+#include <iostream>
 using namespace std;
 
 
@@ -120,4 +120,13 @@ Image ImagePreProcessing::SobelFilter(int chooseFilter, unsigned char ksize) {
 	processedImage.Imfusion(dy, 0.5);
 
 	return processedImage;
+}
+
+Image ImagePreProcessing::wantToSave(Image gray, Image processed)
+{
+	cout << endl << "Graubild ersetzen ?" << endl;
+	cin >> save;
+
+	if (save) return processed;
+	return gray;
 }

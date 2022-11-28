@@ -68,6 +68,9 @@ public:
 
 	Image SobelFilter(int chooseFilter, unsigned char ksize);
 
+	bool save = false;
+	Image wantToSave(Image gray, Image processed);
+
 private:
 	cv::Mat rawImage;
 	cv::Mat procImage;
