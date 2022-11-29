@@ -33,6 +33,7 @@ int main()
 	ImageWindow grayImageWindow(grayImage);
 	ImagePreProcessing gray(rawImage);
 	grayImage = gray.Convert2Gray();
+	Image grayImageSave = grayImage;
 	//grayImageWindow.Imshow("Gray Image");
 
 
@@ -72,6 +73,13 @@ int main()
 				Image sobelImage = sobel.SobelFilter(yourFilter, magnitude);
 				ImageWindow sobelImageWindow(sobelImage);
 				sobelImageWindow.Imshow("Sobelfilter Image");
+
+				ImageWindow::WaitKey();
+				grayImage = filter.wantToSave(grayImageSave, grayImage);//needs fix
+				if (filter.save) {
+					mode = grayImageWindow.intro();
+					continue;
+				}
 			}
 			else if (yourFilter == 1) {
 
@@ -82,8 +90,7 @@ int main()
 				ImageWindow::WaitKey();
 				grayImage = filter.wantToSave(grayImage, boxImage);
 				if (filter.save) {
-					grayImageWindow.intro();
-					mode = grayImageWindow.mode;
+					mode = grayImageWindow.intro();
 					continue;
 				}
 			}
@@ -96,8 +103,7 @@ int main()
 				ImageWindow::WaitKey();
 				grayImage = filter.wantToSave(grayImage, gaussImage);
 				if (filter.save) {
-					grayImageWindow.intro();
-					mode = grayImageWindow.mode;
+					mode = grayImageWindow.intro();
 					continue;
 				}
 			}
@@ -110,13 +116,11 @@ int main()
 				ImageWindow::WaitKey();
 				grayImage = filter.wantToSave(grayImage, medianImage);
 				if (filter.save) {
-					grayImageWindow.intro();
-					mode = grayImageWindow.mode;
+					mode = grayImageWindow.intro();				
 					continue;
 				}
 			}
 		}
-
 //*************************RegionGrowing********************************/  
 
 		else if (mode == 1) {

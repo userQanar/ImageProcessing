@@ -123,7 +123,7 @@ void ImageProcessing::RegionGrowing(int threshold, Point seed, bool local, bool 
 				if (homogenous(offset, threshold, n, outliner)) {
 					mask.Set(currentSeed.X(), currentSeed.Y(), 255 - (2* offset[i]));
 
-					if (inbounds(next[i], mask) && notVisited(next[i], mask)) {
+					if (notVisited(next[i], mask) && inbounds(next[i], mask)) {
 						stack.push(next[i]);
 						mask.Set(next[i].X(), next[i].Y(), 1);
 					}
@@ -134,7 +134,7 @@ void ImageProcessing::RegionGrowing(int threshold, Point seed, bool local, bool 
 				if (homogenous(offset, threshold, n, outliner))										
 					mask.Set(currentSeed.X(), currentSeed.Y(), 255 - (2 * offset[i]));
 			
-				if (inbounds(next[i], mask) && notVisited(next[i], mask)) {
+				if (notVisited(next[i], mask) && inbounds(next[i], mask)) {
 					stack.push(next[i]);
 					mask.Set(next[i].X(), next[i].Y(), 1);
 				}
@@ -177,7 +177,7 @@ void ImageProcessing::RegionFractal(int threshold, Point seed)
 			if (homogenous(offset, threshold, 4, 0)) 
 				mask.Set(currentSeed.X(), currentSeed.Y(), 255 - (2 * offset[i]));	
 
-			if (inbounds(next[i], mask) && notVisited(next[i], mask)) {
+			if (notVisited(next[i], mask) && inbounds(next[i], mask)) {
 				stack.push(next[i]);
 				mask.Set(next[i].X(), next[i].Y(), 1);
 			}		
@@ -189,9 +189,9 @@ void ImageProcessing::RegionFractal(int threshold, Point seed)
 		for (int i = 0; i < 4; i++)
 		{
 		    //int test1 = rawAt; int test2 = rawImage.At(next[i].X(), next[i].Y());
-			check[i] = abs(rawAt - rawImage.At(next[i].X(), next[i].Y()));
-			//std::cout << check[i] << ", ";
-					//if (check[i] < 40 && check[i] > 10) check[i] - 10;
+			offset[i] = abs(rawAt - rawImage.At(next[i].X(), next[i].Y()));
+			//std::cout << offset[i] << ", ";
+					//if (offset[i] < 40 && offset[i] > 10) offset[i] - 10;
 		}
 			//std::cout << endl;
 */

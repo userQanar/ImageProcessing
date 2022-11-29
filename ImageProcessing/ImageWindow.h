@@ -44,7 +44,7 @@ public:
 	bool again = true;
 	bool restartMenu = false;
 
-	void intro();
+	int intro();
 	void chooseFilters();
 	void doItAgain();
 	

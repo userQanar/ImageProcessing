@@ -58,7 +58,7 @@ bool ImageWindow::ImreadDialog(string directory)
 	return true;
 }
 
-void ImageWindow::intro() 
+int ImageWindow::intro() 
 {
 	cout << endl << "Geben Sie die Nummer des Wunschprogramms ein: ";
 	cout << "0.Filtermaske  1.RegionGrowing  2.Fraktalbilder" << endl;
@@ -68,6 +68,7 @@ void ImageWindow::intro()
 		cout << "Ungueltige Eingabe!" << endl;
 		exit(0);
 	}
+	return mode;
 } 
 
 void ImageWindow::chooseFilters()
