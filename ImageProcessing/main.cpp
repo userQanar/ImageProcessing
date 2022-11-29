@@ -33,7 +33,8 @@ int main()
 	ImageWindow grayImageWindow(grayImage);
 	ImagePreProcessing gray(rawImage);
 	grayImage = gray.Convert2Gray();
-	Image grayImageSave = grayImage;
+	Image grayImageSave;
+	grayImageSave = grayImage;
 	//grayImageWindow.Imshow("Gray Image");
 
 
@@ -75,7 +76,7 @@ int main()
 				sobelImageWindow.Imshow("Sobelfilter Image");
 
 				ImageWindow::WaitKey();
-				grayImage = filter.wantToSave(grayImageSave, grayImage);//needs fix
+				grayImage = filter.wantToSave(grayImage, grayImageSave);
 				if (filter.save) {
 					mode = grayImageWindow.intro();
 					continue;
